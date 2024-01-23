@@ -9,9 +9,9 @@ import {
   match as rmatch,
   toPairs,
 } from "rambda";
-import zod from "zod";
-import Sources from "./sources";
-import fs from "fs";
+import * as zod from "zod";
+import Sources, { SourceEnum } from "./sources";
+import * as fs from "fs";
 
 export class Env {
   _env: Record<string, string>;
@@ -78,8 +78,13 @@ export class Env {
 
     const valueToFound = rest.join(":");
 
-    if (source in Sources) return Sources[source]().get(valueToFound);
-    throw new Error(`Unknown source ${source}`);
+    try {
+      const cleanSource = zod.nativeEnum(SourceEnum).parse(source);
+
+      return Sources[cleanSource]().get(valueToFound);
+    } catch (e) {
+      throw new Error(`Unknown source ${source}`);
+    }
   }
 
   get(key: string): string | undefined {

@@ -9,18 +9,20 @@
   },
   "description": "A simple manager for your environment in Node, validate it, use secrets, all in one config",
   "scripts": {
-    "build": "yarn build:prod",
-    "build:prod": "swc src --out-dir  dist",
-    "build:dev": "swc src --out-dir dist --watch",
-    "dev": "yarn build:dev",
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c -w",
     "test": "vitest --ui",
     "test:ci": "vitest run",
     "format": "prettier ./src --write",
     "lint": "eslint ./src --ext .ts"
   },
+  "types": "./dist/es/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "devDependencies": {
-    "@swc/cli": "^0.1.65",
-    "@swc/core": "^1.3.105",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/luxon": "^3.4.2",
     "@types/node": "^20.11.5",
     "@types/uuid": "^9.0.7",
@@ -29,13 +31,20 @@
     "eslint": "^8.56.0",
     "luxon": "^3.4.4",
     "prettier": "^3.2.4",
+    "rollup": "^4.9.6",
+    "tslib": "^2.6.2",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-tsconfig-paths": "^4.3.1",
     "vitest": "^1.2.1",
-    "vitest-mock-extended": "^1.3.1"
+    "vitest-mock-extended": "^1.3.1",
+    "rambda": "^9.0.1",
+    "ts-pattern": "^5.0.6",
+    "uuid": "^9.0.1",
+    "yaml": "^2.3.4",
+    "zod": "^3.22.4"
   },
-  "dependencies": {
+  "peerDependencies": {
     "rambda": "^9.0.1",
     "ts-pattern": "^5.0.6",
     "uuid": "^9.0.1",

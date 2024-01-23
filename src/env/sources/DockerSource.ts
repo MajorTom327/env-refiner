@@ -1,8 +1,8 @@
 import { BaseSource } from "./BaseSource";
-import fs from "fs";
+import * as fs from "fs";
 import { complement, compose, find, isNil, pathOr, when } from "rambda";
 import { parse } from "yaml";
-import zod from "zod";
+import * as zod from "zod";
 
 const dockerComposeSchema = zod.object({
   version: zod.string(),
@@ -17,6 +17,7 @@ const dockerComposeSchema = zod.object({
 type DockerCompose = zod.infer<typeof dockerComposeSchema>;
 
 export class DockerSource implements BaseSource {
+  // @ts-ignore
   fileContent: DockerCompose;
 
   constructor() {
@@ -26,7 +27,7 @@ export class DockerSource implements BaseSource {
   get(key: string): string | undefined {
     const [service, env] = key.split(".");
 
-    // @ts-expect-error bad types definitions
+    // @ts-ignore bad types definitions
     const serviceEnv = compose(
       when(complement(isNil), (env: string) => env.split("=")[1]),
       find((el: string) => el.startsWith(`${env}=`)),

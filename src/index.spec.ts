@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import path from "path";
 import config from "./index";
-import zod from "zod";
+import * as zod from "zod";
 import { DateTime } from "luxon";
 
 describe("Integration of the configurator", () => {

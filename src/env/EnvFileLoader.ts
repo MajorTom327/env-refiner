@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 import { assoc, clone, compose, isEmpty, isNil, reduce, reject } from "rambda";
 import { P, match } from "ts-pattern";
 
@@ -28,8 +28,9 @@ export class EnvFileLoader {
   load(file?: string): Record<string, string> {
     let fileToLoad = match({ file, config: this.file })
       .with({ file: P.string }, ({ file }) => file)
+
       .with({ config: P.string }, ({ config }) => config)
-      .otherwise(() => path.join(process.cwd(), ".env"));
+      .otherwise(() => path.join(process.cwd(), ".env")) as string;
 
     const env = fs.readFileSync(fileToLoad, "utf-8");
     const lines = env.split("\n");

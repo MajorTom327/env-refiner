@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Env } from "./Env";
-import zod from "zod";
+import * as zod from "zod";
 import { v4 as uuid } from "uuid";
 import { EnvSource } from "./sources";
 

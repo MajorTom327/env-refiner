@@ -66,7 +66,7 @@ console.log(env.get('DATABASE_URL'))
 You can define a schema to validate the environments variables and especially to remove the unused environment variables:
 
 ```ts
-import zod from 'zod';
+import * as zod from 'zod';
 import configure from 'env-refiner';
 
 const schema = zod.object({
@@ -92,7 +92,7 @@ Note: A variable loaded from the docker compose will be send to the schema valid
 You may want to have default value ? You can do it with the schema:
 
 ```ts
-import zod from 'zod';
+import * as zod from 'zod';
 import configure from 'env-refiner';
 
 const schema = zod.object({
@@ -113,7 +113,7 @@ if you want you can use a template env and render it to a file with the value of
 This could be useful if you want to generate a dotenv file for your docker compose for example or something else. You do what you want, I don't judge.
 
 ```ts
-import zod from 'zod';
+import * as zod from 'zod';
 import configure from 'env-refiner';
 
 const schema = zod.object({

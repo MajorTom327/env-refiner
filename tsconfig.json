@@ -1,0 +1,24 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./types",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/zod",
+      "./types"
+    ],
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

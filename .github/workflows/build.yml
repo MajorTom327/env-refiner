@@ -88,13 +88,13 @@ jobs:
           key: ${{ github.sha }}
 
 
-      - name: 🚀 publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # - name: 🚀 Publish to GitHub Packages
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    # - name: Publish to npm
-    #   uses: JS-DevTools/npm-publish@v1
-    #   with:
-    #     token: ${{ secrets.NPM_TOKEN }}
-    #     dry-run: false
+      - name: 🚀 Publish to NPM
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: false
