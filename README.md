@@ -1,4 +1,10 @@
 # Env-Refiner <!-- omit in toc -->
+![NPM Downloads](https://img.shields.io/npm/dt/env-refiner)
+[![Build and Publish](https://github.com/MajorTom327/env-refiner/actions/workflows/build.yml/badge.svg)](https://github.com/MajorTom327/env-refiner/actions/workflows/build.yml)
+![NPM Version](https://img.shields.io/npm/v/env-refiner)
+
+
+
 
 A simple project to manage the environment of the application, share it in the repository without exposing secret and validate an environment.
 
