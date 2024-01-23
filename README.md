@@ -22,7 +22,8 @@ A simple project to manage the environment of the application, share it in the r
 ## Installation
 
 ```bash
-npm install $TBD
+npm install env-refiner
+yarn add env-refiner
 ```
 
 ## Usage

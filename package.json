@@ -1,12 +1,24 @@
 {
   "name": "env-refiner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "type": "module",
   "license": "MIT",
   "author": {
     "name": "MajorTom327"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MajorTom327/env-refiner"
+  },
+  "keywords": [
+    "env",
+    "development",
+    "secrets"
+  ],
+  "files": [
+    "dist"
+  ],
   "description": "A simple manager for your environment in Node, validate it, use secrets, all in one config",
   "scripts": {
     "build": "rollup -c rollup.config.js",
