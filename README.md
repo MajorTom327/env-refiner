@@ -1,4 +1,4 @@
-# ENV-REFINER <!-- omit in toc -->
+# Env-Refiner <!-- omit in toc -->
 
 A simple project to manage the environment of the application, share it in the repository without exposing secret and validate an environment.
 
@@ -7,6 +7,9 @@ A simple project to manage the environment of the application, share it in the r
   - [Define your dotenv](#define-your-dotenv)
   - [Load the environment](#load-the-environment)
   - [Render the environment to a file](#render-the-environment-to-a-file)
+  - [Get the environment as a Record](#get-the-environment-as-a-record)
+    - [All the environment](#all-the-environment)
+    - [Only the public environment](#only-the-public-environment)
 - [Definition of placeholder](#definition-of-placeholder)
   - [env](#env)
   - [docker](#docker)
@@ -96,15 +99,24 @@ You may want to have default value ? You can do it with the schema:
 import * as zod from 'zod';
 import configure from 'env-refiner';
 
-const schema = zod.object({
+const publicEnvSchema = zod.object({
   APP_NAME: zod.string().default('My App'),
-  DATABASE_URL: zod.string(),
 });
+
+const schema = zod.object({
+  DATABASE_URL: zod.string(),
+}).merge(publicEnvSchema);
 
 const env = configure({ schema });
 
 
 console.log(env.get('APP_NAME')); // Will print "My App" if not set in environment
+
+// Only a subset of the environment, useful to send to the client for example
+const publicEnv = env.getPublicEnv();
+
+// All the environment, useful to send to the server for example
+const allEnv = env.getEnv();
 ```
 
 
@@ -118,15 +130,65 @@ import * as zod from 'zod';
 import configure from 'env-refiner';
 
 const schema = zod.object({
-  APP_NAME: zod.string().default('My App'),
+  APP_NAME: zod.string(),
   DATABASE_URL: zod.string(),
 });
+
 
 const env = configure({ schema, envFile: 'template.env' });
 
 // This will write a new rendered .env file based on the template.env file
 env.renderToFile('.env');
 ```
+
+
+### Get the environment as a Record
+
+#### All the environment
+
+You should be able to access all the environment variables as a Record<string, string> with the `getEnv` method.
+
+```ts
+import * as zod from 'zod';
+import configure from 'env-refiner';
+
+const publicEnvSchema = zod.object({
+  APP_NAME: zod.string().default('My App'),
+});
+
+const schema = zod.object({
+  DATABASE_URL: zod.string(),
+}).merge(publicEnvSchema);
+
+const env = configure({ schema });
+
+// Here you get all the environment variables as a Record<string, string>
+const allEnv = env.getEnv();
+```
+
+#### Only the public environment
+
+If you want to limite to a subset of items as a public environment, that way you can limit to a subset of the environment.
+
+```ts
+import * as zod from 'zod';
+import configure from 'env-refiner';
+
+const publicEnvSchema = zod.object({
+  APP_NAME: zod.string().default('My App'),
+});
+
+const schema = zod.object({
+  DATABASE_URL: zod.string(),
+}).merge(publicEnvSchema);
+
+const env = configure({ schema });
+
+// Here you can get a subset of the environment variable that could be used to be sent to the client for example
+const publicEnv = env.getPublicEnv();
+```
+
+
 
 ## Definition of placeholder
 

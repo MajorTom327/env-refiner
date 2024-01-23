@@ -1,5 +1,6 @@
 import {
   assoc,
+  clone,
   compose,
   defaultTo,
   isNil,
@@ -16,6 +17,11 @@ import * as fs from "fs";
 export class Env {
   _env: Record<string, string>;
   _schema?: zod.Schema;
+  _publichSchema?: zod.Schema;
+
+  set publicSchema(schema: zod.Schema) {
+    this._publichSchema = schema;
+  }
 
   constructor(env: Record<string, string> = {}, schema?: zod.Schema) {
     if (schema) {
@@ -89,6 +95,18 @@ export class Env {
 
   get(key: string): string | undefined {
     return this._env[key];
+  }
+
+  getEnv(): Record<string, string> {
+    return clone(this._env);
+  }
+
+  getPublicEnv(): Record<string, string> {
+    if (!this._publichSchema) {
+      return {};
+    }
+
+    return this._publichSchema.parse(this._env);
   }
 
   renderToFile(file: string) {

@@ -30,7 +30,7 @@
   },
   "types": "./dist/es/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/es/index.js"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
