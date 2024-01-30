@@ -5,6 +5,10 @@
 
 
 
+<p align="center">
+  <img src="assets/logo.png" width="200" alt="Env-Refiner logo" />
+</p>
+
 
 A simple project to manage the environment of the application, share it in the repository without exposing secret and validate an environment.
 
@@ -137,6 +141,17 @@ const publicEnv = env.getPublicEnv();
 const allEnv = env.getEnv();
 ```
 
+### Advanced usage
+
+You totally can define a variable that should load multiple other variables from multiples sources.
+
+This can be useful if you have to compose a url from multiple variables for example. In the following example, we will load the database url from the docker compose and the database name from the environment.
+
+```dotenv
+# .env
+
+DATABASE_URL="postgresql://{{docker:postgres.POSTGRES_USER}}:{{docker:postgres.POSTGRES_PASSWORD}}@localhost:5432/{{docker:postgres.POSTGRES_DB}}"
+```
 
 ### Render the environment to a file
 
