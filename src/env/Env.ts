@@ -97,8 +97,9 @@ export class Env {
       const cleanSource = zod.nativeEnum(SourceEnum).parse(source);
 
       return Sources[cleanSource]().get(valueToFound);
-    } catch (e) {
-      throw new Error(`Unknown source ${source}`);
+    } catch (e: any) {
+
+      throw new Error(`Unknown source ${source} Error: ${e.message}`);
     }
   }
 

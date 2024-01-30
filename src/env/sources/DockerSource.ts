@@ -38,6 +38,9 @@ export class DockerSource implements BaseSource {
   }
 
   load(): void {
+    if (!fs.existsSync("docker-compose.yml")) {
+      throw new Error("docker-compose.yml not found");
+    }
     const fileContent = fs.readFileSync("docker-compose.yml", "utf-8");
 
     const data = parse(fileContent);

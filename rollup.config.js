@@ -39,4 +39,16 @@ export default [
 
     output: { file: "dist/es/index.js", format: "es" },
   },
+  {
+    input: "src/env-refiner.ts",
+    plugins,
+    external: ["zod", "path", "fs"],
+    output: { file: "dist/bin/es/env-refiner", format: "es" },
+  },
+  {
+    input: "src/env-refiner.ts",
+    plugins,
+    external: ["zod", "path", "fs"],
+    output: { file: "dist/bin/env-refiner", format: "cjs" },
+  },
 ];

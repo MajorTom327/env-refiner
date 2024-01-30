@@ -32,7 +32,8 @@ describe("Integration of the configurator", () => {
 
     vi.mock("fs", () => {
       const dflt = {
-        readFileSync: (f) => {
+        existsSync: () => true,
+        readFileSync: (f: string) => {
           const fileName = path.basename(f);
           // console.log(fileName);
 
@@ -100,7 +101,8 @@ describe("Integration of the configurator", () => {
 
     vi.mock("fs", () => {
       const dflt = {
-        readFileSync: (f) => {
+        existsSync: () => true,
+        readFileSync: (f: string) => {
           const fileName = path.basename(f);
           // console.log(fileName);
 

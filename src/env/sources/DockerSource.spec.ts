@@ -33,6 +33,7 @@ describe("DockerSource", () => {
 
       const dflt = {
         readFileSync: () => file,
+        existsSync: () => true,
       };
 
       return {
