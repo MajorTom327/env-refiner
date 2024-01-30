@@ -67,6 +67,36 @@ describe("Load from external informations", () => {
       });
     });
 
+    it("Should load correctly a multiple env", () => {
+      const user = "lorem";
+      const passwd = "ipsum";
+      const host = "localhost";
+      const port = "5432";
+
+      process.env.POSTGRES_USER = user;
+      process.env.POSTGRES_PASSWORD = passwd;
+      process.env.POSTGRES_HOST = host;
+      process.env.POSTGRES_PORT = port;
+
+      const env = new Env();
+      const result = env.getEnvFromExternalSources({
+        DATABASE_URL:
+          "postgres://{{env:POSTGRES_USER}}:{{env:POSTGRES_PASSWORD}}@{{env:POSTGRES_HOST}}:{{env:POSTGRES_PORT}}/postgres",
+        POSTGRES_USER: "{{env:POSTGRES_USER}}",
+        POSTGRES_PASSWORD: "{{env:POSTGRES_PASSWORD}}",
+        POSTGRES_HOST: "{{env:POSTGRES_HOST}}",
+        POSTGRES_PORT: "{{env:POSTGRES_PORT}}",
+      });
+
+      expect(result).to.deep.equal({
+        DATABASE_URL: `postgres://${user}:${passwd}@${host}:${port}/postgres`,
+        POSTGRES_USER: user,
+        POSTGRES_PASSWORD: passwd,
+        POSTGRES_HOST: host,
+        POSTGRES_PORT: port,
+      });
+    });
+
     it("Should ignore the value if not a loadable env key", () => {
       const env = new Env({
         FOO: "BAR",

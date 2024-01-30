@@ -3,6 +3,7 @@ import {
   clone,
   compose,
   defaultTo,
+  isEmpty,
   isNil,
   join,
   map,
@@ -54,6 +55,8 @@ export class Env {
   getEnvFromExternalSources(
     env: Record<string, string>
   ): Record<string, string> {
+    console.countReset("Mapping keys");
+    const mappingRegex = /{{([^}]*)}}/g;
     return compose<
       [Record<string, string>],
       (a: [string, string][]) => Record<string, string>
@@ -64,15 +67,18 @@ export class Env {
       // @ts-expect-error bad types definitions
       map<[string, string], [string, string]>(
         ([key, value]: [string, string]) => {
-          const [_, result] = rmatch(/^{{(.*)}}$/, value);
+          const result = rmatch(mappingRegex, value);
 
-          if (isNil(result)) {
+          if (isEmpty(result)) {
             return [key, value] as const;
           }
 
-          const valueFromSource = this.getValueFromSource(result);
+          const resultValue = result.reduce((acc, match) => {
+            const value = this.getValueFromSource(match) || "";
+            return acc.replaceAll(match, value);
+          }, value);
 
-          return [key, valueFromSource || ""] as const;
+          return [key, resultValue] as const;
         }
       ),
       toPairs
@@ -80,7 +86,10 @@ export class Env {
   }
 
   private getValueFromSource(key: string) {
-    const [source, ...rest] = key.split(":");
+    const [source, ...rest] = key
+      .replaceAll("{", "")
+      .replaceAll("}", "")
+      .split(":");
 
     const valueToFound = rest.join(":");
 
