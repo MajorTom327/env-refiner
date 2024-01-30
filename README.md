@@ -35,6 +35,18 @@ npm install env-refiner
 yarn add env-refiner
 ```
 
+## CLI Usage
+
+You can also use the cli to render a .env file based on a template.
+
+```bash
+# Long version
+yarn env-refiner --input template.env --output .env
+
+# Short version
+yarn env-refiner -i template.env -o .env
+```
+
 ## Usage
 
 This librairie enable you define your dotenv with placeholde. That mean, you can define where it would load the informations and replace the placeholder.
