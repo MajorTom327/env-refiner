@@ -98,13 +98,12 @@ export class Env {
 
       return Sources[cleanSource]().get(valueToFound);
     } catch (e: any) {
-
       throw new Error(`Unknown source ${source} Error: ${e.message}`);
     }
   }
 
-  get(key: string): string | undefined {
-    return this._env[key];
+  get<T = string | undefined>(key: string): T {
+    return this._env[key] as T;
   }
 
   getEnv(): Record<string, string> {
