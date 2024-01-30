@@ -49,15 +49,15 @@ export default [
       format: "es",
     },
   },
-  {
-    input: "src/env-refiner.ts",
-    plugins,
+  // {
+  //   input: "src/env-refiner.ts",
+  //   plugins,
 
-    external: ["zod", "path", "fs"],
-    output: {
-      intro: "#!/usr/bin/env node",
-      file: "dist/bin/env-refiner",
-      format: "cjs",
-    },
-  },
+  //   external: ["zod", "path", "fs"],
+  //   output: {
+  //     intro: "#!/usr/bin/env node",
+  //     file: "dist/bin/env-refiner",
+  //     format: "cjs",
+  //   },
+  // },
 ];
