@@ -37,8 +37,13 @@ export class Env {
       this
     ) as (_: Record<string, string>) => Record<string, string>;
 
+    const cleanupEnvVars = this.cleanupEnvVars.bind(this) as (
+      _: Record<string, string>
+    ) => Record<string, string>;
+
     this._env = compose(
       validate,
+      cleanupEnvVars,
       getEnvFromExternalSources,
       defaultTo({})
     )(env);
@@ -50,6 +55,25 @@ export class Env {
     }
 
     return env;
+  }
+
+  private cleanupEnvVars(env: Record<string, string>): Record<string, string> {
+    const pairs = toPairs(env);
+    return pairs.reduce(
+      (acc, [key, value]) => {
+        if (value.startsWith('"') && value.endsWith('"')) {
+          // Emsure empties are not removed
+          if (value.length === 2) {
+            return { ...acc, [key]: "" };
+          }
+
+          const newValue = value.slice(1, -1);
+          return { ...acc, [key]: newValue };
+        }
+        return { ...acc, [key]: value };
+      },
+      {} as Record<string, string>
+    );
   }
 
   getEnvFromExternalSources(

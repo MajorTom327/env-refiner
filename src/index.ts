@@ -8,6 +8,7 @@ type Config = {
 
 export const config = ({ schema, publicSchema, envFile }: Config = {}) => {
   const loadedEnv = new EnvFileLoader(envFile).load();
+
   const env = new Env(loadedEnv, schema);
 
   if (publicSchema) {
